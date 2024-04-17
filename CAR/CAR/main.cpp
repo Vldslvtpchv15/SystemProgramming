@@ -72,3 +72,4 @@ int main()
 	Tank tank(50);
 	tank.info();
 }
+
