@@ -56,7 +56,7 @@ public:
         }
         if (fuel_level - ammount > 0)
         {
-            fuel_level - ammount;
+            fuel_level -= ammount;
         }
         else
         {
