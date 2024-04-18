@@ -5,71 +5,76 @@ using namespace std;
 
 class Tank
 {
-	const int VOLUME;
-	double fuel_level;
+    const int VOLUME;
+    double fuel_level;
 public:
-	const int getVOLUME()const
-	{
-		return VOLUME;
-	}
-	double getfule_level()const
-	{
-		return fuel_level;
-	}
-	void fill(double ammount)
-	{
-		if (ammount < 0)
-		{
-			return;
-		}
-		if (fuel_level + ammount < VOLUME)
-		{
-			fuel_level += ammount;
-		}
-		else
-		{
-			fuel_level = VOLUME;
-		}
-	}
-	double give_fuel(double ammount)
-	{
-		if (ammount < 0)
-		{
-			return fuel_level;
-		}
-		if (fuel_level - ammount > 0)
-		{
-			return fuel_level - ammount;
-		}
-		else
-		{
-			fuel_level = 0;
-		}
-		return fuel_level;
-	}
-
-	Tank(int volume):VOLUME(volume)
-	{
-		/*if (volume < MIN_TANK_VOLUME) volume = MIN_TANK_VOLUME;
-		if (volume < MAX_TANK_VOLUME) volume = MAX_TANK_VOLUME;
-		this->VOLUME = volume;*/
-		this->fuel_level = 0;
-		cout << "Tank id ready" << this << endl;
-	}
-
-	void info() const
-	{
-		cout << "Tank volume: " << VOLUME << "liters.\n";
-		cout << "Fuel level: " << fuel_level << "liters.\n";
-	}
+    const int getVOLUME()const
+    {
+        return VOLUME;
+    }
+    double getfule_level()const
+    {
+        return fuel_level;
+    }
+    int check(int volume)
+    {
+        if (volume < MIN_TANK_VOLUME)
+        {
+            volume = MIN_TANK_VOLUME;
+        }
+        if (volume > MAX_TANK_VOLUME)
+        {
+            volume = MAX_TANK_VOLUME;
+        }
+        return volume;
+    }
+    Tank(int volume) :VOLUME(check(volume))
+    {
+        this->fuel_level = 0;
+        cout << "Tank is ready\n";
+    }
+    void fill(double ammount)
+    {
+        if (ammount < 0)
+        {
+            return;
+        }
+        if (fuel_level + ammount < VOLUME)
+        {
+            fuel_level += ammount;
+        }
+        else
+        {
+            fuel_level = VOLUME;
+        }
+    }
+    double give_fuel(double ammount)
+    {
+        if (ammount < 0)
+        {
+            return fuel_level;
+        }
+        if (fuel_level - ammount > 0)
+        {
+            fuel_level - ammount;
+        }
+        else
+        {
+            fuel_level = 0;
+        }
+        return fuel_level;
+    }
+    void info()const
+    {
+        cout << "Tank volume: " << VOLUME << " liters \n";
+        cout << "Fuel level: " << fuel_level << " liters \n";
+    }
 };
-
 
 int main()
 {
-	setlocale(LC_ALL, "");
-	
-	Tank tank(50);
-	tank.info();
-}
+    setlocale(LC_ALL, "Russian");
+    Tank tank(-40);
+    tank.info();
 
+}
