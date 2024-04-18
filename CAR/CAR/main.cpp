@@ -222,6 +222,7 @@
 //}
 
 #include <iostream>
+#include <conio.h>
 using namespace std;
 #define MIN_TANK_VOLUME 20
 #define MAX_TANK_VOLUME 120
@@ -234,7 +235,7 @@ public:
     {
         return VOLUME;
     }
-    double getfule_level()const
+    double get_fuel_level()const
     {
         return fuel_level;
     }
@@ -277,11 +278,11 @@ public:
     void info()const
     {
         cout << "Tank volume: " << VOLUME << " liters\n";
-        cout << "Fuel level: " << fuel_level << " liters";
+        cout << "Fuel level: " << fuel_level << " liters\n";
     }
     ~Tank()
     {
-        cout << "Tank is over" << endl;
+        cout << "Tank is over\n" << endl;
     }
 };
 #define MIN_ENGINE_CONSUMPTION 3
@@ -307,7 +308,7 @@ public:
     }
     ~Engine()
     {
-        cout << "Engine is over" << endl;
+        cout << "Engine is over\n" << endl;
     }
 
     void start()
@@ -330,6 +331,65 @@ public:
         cout << "Engine consumption: " << CONSUMPTION << " liters\n";
         cout << "Engine consumption per second: " << consumption_per_second << " liters\n";
         cout << "Engine is " << (is_started ? "started" : "stopped") << endl;
+    }
+};
+
+class Car
+{
+    Engine engine;
+    Tank tank;
+    bool driver_inside;
+public:
+    Car(int consumption = 10, int volume = 60) : engine(consumption), tank(volume), driver_inside(false)
+    {
+        cout << "Your car is ready to go" << endl;
+    }
+    ~Car()
+    {
+        cout << "Your car is over\n";
+    }
+
+    void get_in()
+    {
+        driver_inside = true;
+        panel();
+    }
+
+    void get_out()
+    {
+        driver_inside = false;
+        cout << "Out of the car" << endl;
+    }
+    
+    void control()
+    {
+        char key;
+        do
+        {
+            key = _getch();
+            switch (key)
+            {
+            case 13: driver_inside ? get_out() : get_in(); break;
+                break;
+            }
+        } while (key != 27);
+        
+    }
+
+    void panel() const
+    {
+        while (driver_inside)
+        {
+            system("CLS");
+            cout << "Fuel level:\t" << tank.get_fuel_level() << "liters.\n";
+            cout << "Engine is " << (engine.started() ? "started" : "stopped") << endl;
+        }
+    }
+    
+    void info() const
+    {
+        engine.info();
+        tank.info();
     }
 };
 
@@ -357,7 +417,12 @@ int main()
         tank.fill(fuel);
         tank.info();
 #endif // tank_check
-    Engine engine(10);
-    engine.info();
+#ifdef ENGINE
+        Engine engine(10);
+        engine.info();
+#endif // ENGINE
 
+        Car bmw;
+        bmw.info();
+        bmw.control();
 }
